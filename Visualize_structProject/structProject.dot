@@ -1,0 +1,406 @@
+digraph projet_SP {
+
+    node [shape=rectangle, fontname=Arial, fontsize=12];
+    edge [fontname=Arial];
+    layout=dot;
+    splines=ortho;
+
+    // Structures
+
+    // Sous-graphe src
+    subgraph cluster_src {
+        label = "Répertoire /src contenant tous les fichiers sources";
+        fontcolor=black;
+
+        // Fichiers .c
+        bellman_ford_c [label="bellman-ford.c", style="filled", fillcolor="#ffcc99"];
+        display_c [label="display.c", style="filled", fillcolor="#E6E6FA"];
+        files_c [label="files.c", style="filled", fillcolor="#99b3ff"];
+        struct_free_c [label="struct_free.c", style="filled", fillcolor="#ffd700"];
+        struct_creater_c [label="struct_creater.c", style="filled", fillcolor="#ffb3ff"];
+        struct_initializer_c [label="struct_initializer.c", style="filled", fillcolor="#b3e6ff"];
+        struct_modifier_c [label="struct_modifier.c", style="filled", fillcolor="#e2b2d2"];
+        verifyOutput_c [label="verifyOutput.c", style="filled", fillcolor=lightblue];
+    }
+
+    // Sous-graphe include
+    subgraph cluster_include {
+        label = "Répertoire /include contenant tous les fichiers headers";
+        fontcolor=black;
+
+        // Fichiers .h
+        bellman_ford_h [label="bellman_ford.h", style="filled", fillcolor="#ffcc99"];
+        display_h [label="display.h", style="filled", fillcolor="#E6E6FA"];
+        files_h [label="files.h", style="filled", fillcolor="#99b3ff"];
+        struct_creater_h [label="struct_creater.h", style="filled", fillcolor="#ffb3ff"];
+        struct_initializer_h [label="struct_initializer.h", style="filled", fillcolor="#b3e6ff"];
+        struct_modifier_h [label="struct_modifier.h", style="filled", fillcolor="#e2b2d2"];
+        struct_free_h [label="struct_free.h", style="filled", fillcolor="#ffd700"];
+        verifyOutput_h [label="verifyOutput.h", style="filled", fillcolor=lightblue];
+        sp_h [label="sp.h", style="filled", fillcolor=red];
+
+
+        // Sous-graphe unassociated
+        subgraph cluster_unassociated {
+            label = "Répertoire /unassociated contenant les fichiers headers\n non associé à un fichier source";
+            fontcolor=black;
+            
+            struct_h [label="struct.h", style="filled", fillcolor="#228B22"];
+            macro_h [label="macro.h", style="filled", fillcolor="#FFC0CB"];
+            portable_endian_h [label="portable_endian.h", style="filled", fillcolor="#f2f2f2"];
+            portable_semaphore_h [label="portable_semaphore.h", style="filled", fillcolor="#f2f2f2"];
+        }
+    }
+
+    // Sous-graphe library
+    subgraph cluster_library {
+        label = "fichiers headers (de librairies) importés";
+        fontcolor=black;
+        rankdir="TD";
+        
+
+        stdio_h [label="#include <stdio.h>", style="filled", fillcolor="#f2f2f2"];
+        stdbool_h [label="#include <stdbool.h>", style="filled", fillcolor="#f2f2f2"];
+        stdint_h [label="#include <stdint.h>", style="filled", fillcolor="#f2f2f2"];
+        machine_endian_h [label="#include <machine/endian.h>", style="filled", fillcolor="#f2f2f2"];
+        libkern_OSByteOrder_h [label="#include <libkern/OSByteOrder.h>", style="filled", fillcolor="#f2f2f2"];
+        stdlib_h [label="#include <stdlib.h>", style="filled", fillcolor="#f2f2f2"];
+        string_h [label="#include <string.h>", style="filled", fillcolor="#f2f2f2"];
+        errno_h [label="#include <errno.h>", style="filled", fillcolor="#f2f2f2"];
+        inttypes_h [label="#include <inttypes.h>", style="filled", fillcolor="#f2f2f2"];
+        sys_types_h [label="#include <sys/types.h>", style="filled", fillcolor="#f2f2f2"];
+        time_h [label="#include <time.h>", style="filled", fillcolor="#f2f2f2"];
+        sys_mman_h [label="#include <sys/mman.h>", style="filled", fillcolor="#f2f2f2"];
+        sys_stat_h [label="#include <sys/stat.h>", style="filled", fillcolor="#f2f2f2"];
+        unistd_h [label="#include <unistd.h>", style="filled", fillcolor="#f2f2f2"];
+        fcntl_h [label="#include <fcntl.h>", style="filled", fillcolor="#f2f2f2"];
+        getopt_h [label="#include <getopt.h>", style="filled", fillcolor="#f2f2f2"];
+
+        machine_endian_h -> portable_endian_h [constraint=false, color="#BEBEBE"];
+        libkern_OSByteOrder_h -> portable_endian_h [constraint=false, color="#BEBEBE"];
+
+        stdint_h -> portable_semaphore_h [constraint=false, color="#BEBEBE"];
+        stdlib_h -> portable_semaphore_h [constraint=false, color="#BEBEBE"];
+
+        stdint_h -> struct_h [color="#BEBEBE"];
+        stdio_h -> struct_h [color="#BEBEBE"];
+        stdbool_h -> struct_h [color="#BEBEBE"];
+
+        stdbool_h -> bellman_ford_h [color="#BEBEBE"];
+        inttypes_h -> bellman_ford_h [color="#BEBEBE"];
+        stdlib_h -> bellman_ford_h [color="#BEBEBE"];
+        errno_h -> bellman_ford_h [color="#BEBEBE"];
+        
+        stdint_h -> display_h [color="#BEBEBE"];
+        stdbool_h -> display_h [color="#BEBEBE"];
+        inttypes_h -> display_h [color="#BEBEBE"];
+        stdio_h -> display_h [color="#BEBEBE"];
+        string_h -> display_h [color="#BEBEBE"];
+
+        stdlib_h -> files_h [color="#BEBEBE"];
+        sys_mman_h -> files_h [color="#BEBEBE"];
+        sys_stat_h -> files_h [color="#BEBEBE"];
+        unistd_h -> files_h [color="#BEBEBE"];
+        fcntl_h -> files_h [color="#BEBEBE"];
+        inttypes_h -> files_h [color="#BEBEBE"];
+        stdbool_h -> files_h [color="#BEBEBE"];
+        errno_h -> files_h [color="#BEBEBE"];
+
+        time_h -> sp_h [color="#BEBEBE"];
+
+        stdio_h -> struct_creater_h [color="#BEBEBE"];
+        errno_h -> struct_creater_h [color="#BEBEBE"];
+
+        sys_types_h -> struct_free_h [color="#BEBEBE"];
+        sys_mman_h -> struct_free_h [color="#BEBEBE"];
+        sys_stat_h -> struct_free_h [color="#BEBEBE"];
+        unistd_h -> struct_free_h [color="#BEBEBE"];
+        stdlib_h -> struct_free_h [color="#BEBEBE"];
+
+        stdlib_h -> struct_initializer_h [color="#BEBEBE"];
+        errno_h -> struct_initializer_h [color="#BEBEBE"];
+
+        stdio_h -> struct_modifier_h [color="#BEBEBE"];
+        getopt_h -> struct_modifier_h [color="#BEBEBE"];
+
+        stdbool_h -> verifyOutput_h [color="#BEBEBE"];
+        inttypes_h -> verifyOutput_h [color="#BEBEBE"];
+        stdint_h -> verifyOutput_h [color="#BEBEBE"];
+        stdlib_h -> verifyOutput_h [color="#BEBEBE"];
+        stdio_h -> verifyOutput_h [color="#BEBEBE"];
+        errno_h -> verifyOutput_h [color="#BEBEBE"];
+    }
+
+    // Sous-graphe sp_c
+    subgraph cluster_sp_c {
+        label = "fichier main";
+        fontcolor=black;
+        bgcolor="#e6e6e6"
+        size="40,40!"
+        
+        sp_c [label="sp.c", style="filled", fillcolor=red];
+    }
+
+    bellman_ford_h -> bellman_ford_c [style=dashed, color="#d16e40"];
+    files_h -> files_c [style=dashed, color="#00008B"];
+    display_h -> display_c [style=dashed, color="#708090"];
+    sp_h -> sp_c [style=dashed, color="#8B0000"];
+    struct_free_h -> struct_free_c [style=dashed, color="#997a00"];
+    struct_initializer_h -> struct_initializer_c [style=dashed, color="#1E90FF"];
+    struct_modifier_h -> struct_modifier_c [style=dashed, color="#9e5670"];
+    verifyOutput_h -> verifyOutput_c [style=dashed, color="#2B547E"];
+    struct_creater_h -> struct_creater_c [style=dashed, color="#ff00ff"];
+
+    // Sous-graphe struct
+    subgraph cluster_struct {
+        label = "Implémentation de struct.h\nvert pomme = structures\nvert émeraude = attributs";
+        fontcolor=black;
+        bgcolor="#b3ffb3";
+
+        FileMapping_t [label="FileMapping_t", style="filled", fillcolor="#8bc34a"];
+        graph_t [label="graph_t", style="filled", fillcolor="#8bc34a"];
+        outputGraph_t [label="outputGraph_t", style="filled", fillcolor="#8bc34a"];
+        args_t [label="args_t", style="filled", fillcolor="#8bc34a"];
+        
+        // Variables
+        mapper [label="mapper", style="filled", fillcolor="#50c878"];
+        buffer [label="buffer", style="filled", fillcolor="#50c878"];
+
+        nberNodes [label="nberNodes", style="filled", fillcolor="#50c878"];
+        nberEdges [label="nberEdges", style="filled", fillcolor="#50c878"];
+        from [label="from", style="filled", fillcolor="#50c878"];
+        to [label="to", style="filled", fillcolor="#50c878"];
+        weight [label="weight", style="filled", fillcolor="#50c878"];
+        
+        sourceNode [label="sourceNode", style="filled", fillcolor="#50c878"];
+        destinationNode [label="destinationNode", style="filled", fillcolor="#50c878"];
+        totalCost [label="totalCost", style="filled", fillcolor="#50c878"];
+        pathLength [label="pathLength", style="filled", fillcolor="#50c878"];
+        pathList [label="pathList", style="filled", fillcolor="#50c878"];
+        
+        input_stream [label="input_stream", style="filled", fillcolor="#50c878"];
+        output_stream [label="output_stream", style="filled", fillcolor="#50c878"];
+        nb_threads [label="nb_threads", style="filled", fillcolor="#50c878"];
+        verbose [label="verbose", style="filled", fillcolor="#50c878"];
+
+        struct_h -> FileMapping_t [color="#004d00"];
+        struct_h -> graph_t [color="#004d00"];
+        struct_h -> outputGraph_t [color="#004d00"];
+        struct_h -> args_t [color="#004d00"];
+
+        FileMapping_t -> mapper [color="#006400"];
+        FileMapping_t -> buffer [color="#006400"];
+        
+        graph_t -> nberNodes [color="#006400"];
+        graph_t -> nberEdges [color="#006400"];
+        graph_t -> from [color="#006400"];
+        graph_t -> to [color="#006400"]; 
+        graph_t -> weight [color="#006400"];
+        
+        outputGraph_t -> nberNodes [color="#006400"];
+        outputGraph_t -> sourceNode [color="#006400"];
+        outputGraph_t -> destinationNode [color="#006400"];
+        outputGraph_t -> totalCost [color="#006400"];
+        outputGraph_t -> pathLength [color="#006400"];
+        outputGraph_t -> pathList [color="#006400"];
+
+        args_t -> input_stream [color="#006400"];
+        args_t -> output_stream [color="#006400"];
+        args_t -> nb_threads [color="#006400"];
+        args_t -> verbose [color="#006400"];
+    }
+
+    // Sous-graphe macro
+    subgraph cluster_macro {
+        label = "Constante définies (via #DEFINE) dans macro.h";
+        fontcolor=black;
+        bgcolor="#ffcccb"
+
+        INFINITY_VALUE [label="INFINITY_VALUE", style="filled", fillcolor="#FFE4E1"];
+        MINUS_INFINITY [label="MINUS_INFINITY",style="filled", fillcolor="#FFE4E1"];
+        TIMER_ON [label="TIMER_ON",style="filled", fillcolor="#FFE4E1"];
+
+        macro_h -> INFINITY_VALUE [color="#ff007f"];
+        macro_h -> MINUS_INFINITY [color="#ff007f"];
+        macro_h -> TIMER_ON [color="#ff007f"];
+    }
+
+    // Les liens entre les fichiers
+    struct_h -> bellman_ford_h
+    macro_h -> bellman_ford_h
+    display_h-> bellman_ford_h
+
+    macro_h -> display_h
+    portable_endian_h -> display_h
+
+    portable_endian_h -> files_h
+    macro_h -> files_h
+    struct_h -> files_h
+    struct_creater_h -> files_h
+    display_h -> files_h
+
+    portable_endian_h -> sp_h
+    portable_semaphore_h -> sp_h
+    bellman_ford_h -> sp_h
+    files_h -> sp_h
+
+    struct_h -> struct_creater_h
+    struct_free_h -> struct_creater_h
+    struct_modifier_h -> struct_creater_h
+    struct_initializer_h -> struct_creater_h
+    display_h -> struct_creater_h
+
+    struct_h -> struct_free_h
+
+    struct_h -> struct_initializer_h
+    struct_modifier_h -> struct_initializer_h
+    display_h -> struct_initializer_h
+
+    struct_h -> struct_modifier_h
+    macro_h -> struct_modifier_h
+    portable_endian_h -> struct_modifier_h
+    bellman_ford_h -> struct_modifier_h
+
+    display_h -> verifyOutput_h
+
+   subgraph cluster_funct_files_c {
+        labelloc="b";
+        label = "Fonctions définies dans files.c";
+        fontcolor=black;
+        rankdir=TB;
+        bgcolor="#99b3ff";
+        splines=polyline;
+
+        files_c -> get_InputFile_Mapper [color="#00008B", constraint=true]
+        files_c -> writeNberNodes_OutputFile [color="#00008B", constraint=true]
+        files_c -> writeData_OutputFile [color="#00008B", constraint=true]
+    }
+
+    // Sous-graphe funct_bellman_ford_c
+    subgraph cluster_funct_bellman_ford_c {
+        labelloc="b";
+        label = "Fonctions définies dans bellman-ford.c";
+        fontcolor=black;
+        rankdir=TB;
+        bgcolor="#ffcc99";
+        splines=polyline;
+
+        bellman_ford_c -> initializeAll [color="#d16e40", constraint=true];
+        bellman_ford_c -> updateDistancesAndPath [color="#d16e40", constraint=true];
+        bellman_ford_c -> checkNegCycle [color="#d16e40", constraint=true];
+        bellman_ford_c -> bellman_ford [color="#d16e40", constraint=true];
+        bellman_ford_c -> completePathList [color="#d16e40", constraint=true];
+        bellman_ford_c -> reversePathList [color="#d16e40", constraint=true];
+        bellman_ford_c -> getPath [color="#d16e40", constraint=true];
+    }
+
+    // Sous-graphe funct_display_c
+    subgraph cluster_funct_display_c {
+        labelloc="b";
+        label = "Fonctions définies dans display.c";
+        fontcolor=black;
+        splines=spline
+        rankdir=TB;
+        bgcolor="#E6E6FA";
+        splines=polyline;
+
+        display_c -> printNberThreadsNeg [color="#708090", constraint=true];
+        display_c -> printNeedEntryFile [color="#708090", constraint=true];
+        display_c -> printErrorWriting [color="#708090", constraint=true];
+        display_c -> printOpenFileError [color="#708090", constraint=true];
+        display_c -> printCloseFileError [color="#708090", constraint=true];
+        display_c -> printMemoryAllocationError [color="#708090", constraint=true];
+        display_c -> printGraphNotInitialized [color="#708090", constraint=true];
+        display_c -> printMethodFailed [color="#708090", constraint=true];
+        display_c -> printErrorNoFile [color="#708090", constraint=true];
+        display_c -> printDecodingSection [color="#708090", constraint=true];
+        display_c -> printErrorprintAlgorithme_Encodage_SectionNoFile [color="#708090", constraint=true];
+        display_c -> printInitializationSucceeded [color="#708090", constraint=true];
+        display_c -> printNoNegativeCycleDetected [color="#708090", constraint=true];
+        display_c -> printNegativeCycleDetected [color="#708090", constraint=true];
+        display_c -> printInputGraphInfo [color="#708090", constraint=true];
+        display_c -> printInputGraphLien [color="#708090", constraint=true];
+        display_c -> printDatas [color="#708090", constraint=true];
+        display_c -> printPath [color="#708090", constraint=true];
+        display_c -> printTimer [color="#708090", constraint=true];
+        display_c -> usage [color="#708090", constraint=true];
+        display_c -> printDifferentSize [color="#708090", constraint=true];
+        display_c -> printSameSize [color="#708090", constraint=true];
+    }
+
+    // Sous-graphe funct_struct_modifier_c
+    subgraph cluster_funct_struct_modifier_c {
+        labelloc="b";
+        label = "Fonctions définies dans struct_modifier.c";
+        fontcolor=black;
+        rankdir=TB;
+        bgcolor="#e2b2d2";
+        splines=polyline;
+
+        struct_modifier_c -> updateNberNodesOfInputGraph [color="#9e5670", constraint=true];
+        struct_modifier_c -> updateEdgeOfInputGraph [color="#9e5670", constraint=true];
+        struct_modifier_c -> updateOutputGraph_BaseCase [color="#9e5670", constraint=true];
+        struct_modifier_c -> updateFileMapping [color="#9e5670", constraint=true];
+        struct_modifier_c -> updateOptArgs [color="#9e5670", constraint=true];
+        struct_modifier_c -> updateObligatoryArg [color="#9e5670", constraint=true];
+    }
+
+    // Sous-graphe funct_struct_creater_c
+    subgraph cluster_funct_struct_creater_c {
+        labelloc="b";
+        label = "Fonctions définies dans struct_creater.c";
+        fontcolor=black;
+        rankdir=TB;
+        bgcolor="#ffb3ff";
+        splines=polyline;
+
+        struct_creater_c -> createInputGraph [color="#ff00ff", constraint=true];
+        struct_creater_c -> createOutputGraph [color="#ff00ff", constraint=true];
+        struct_creater_c -> createFileMapping [color="#ff00ff", constraint=true];
+        struct_creater_c -> createArgs [color="#ff00ff", constraint=true];
+    }
+
+    // Sous-graphe funct_struct_free_c
+    subgraph cluster_funct_struct_free_c {
+        labelloc="b";
+        label = "Fonctions définies dans struct_free.c";
+        fontcolor=black;
+        rankdir=TB;
+        bgcolor="#ffd700";
+        splines=polyline;
+
+        struct_free_c -> freeOutputGraph [color="#997a00", constraint=true];
+        struct_free_c -> freeInputGraph [color="#997a00", constraint=true];
+        struct_free_c -> freeFileMapping [color="#997a00", constraint=true];
+        struct_free_c -> freeArgs [color="#997a00", constraint=true];
+    }
+
+    // Sous-graphe funct_struct_initializer_c
+    subgraph cluster_funct_struct_initializer_c {
+        labelloc="b";
+        label = "Fonctions définies dans struct_initializer.c";
+        fontcolor=black;
+        rankdir=TB;
+        bgcolor="#b3e6ff";
+        splines=polyline;
+
+        struct_initializer_c -> initializeInputGraph [color="#1E90FF", constraint=true];
+        struct_initializer_c -> initializeOutputGraph [color="#1E90FF", constraint=true];
+        struct_initializer_c -> initializeFileMapping [color="#1E90FF", constraint=true];
+        struct_initializer_c -> initializeDefaultArgs [color="#1E90FF", constraint=true];
+    }
+
+    // Sous-graphe funct_verifyOutput_c
+    subgraph cluster_funct_verifyOutput_c {
+        labelloc="b";
+        label = "Fonctions définies dans verifyOutput.c";
+        fontcolor=black;
+        rankdir=TB;
+        bgcolor=lightblue;
+        splines=polyline;
+
+        verifyOutput_c -> check_same_size [color="#2B547E", constraint=true];
+        verifyOutput_c -> check_same_contains [color="#2B547E", constraint=true];
+        verifyOutput_c -> compare_two_outputFile [color="#2B547E", constraint=true];
+    }
+}
