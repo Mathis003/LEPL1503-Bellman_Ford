@@ -22,7 +22,7 @@ On y stockera également en résultat le chemin pour y accéder (Voir Spécifica
 
 # Auteurs
 
-Mathis Delsart, Adrien Antonutti, Edouard Michiels, Laura Rauw, Pierre Pasture et Ulysse Reinbold.
+Mathis Delsart et Adrien Antonutti.
 
 15 Mai 2023.
 
