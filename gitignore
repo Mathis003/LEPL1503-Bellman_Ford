@@ -340,7 +340,7 @@ main.dSYM
 unit_test.dSYM
 
 # Coverage
-coverage
+/coverage
 *.gcda
 *.gcno
 
