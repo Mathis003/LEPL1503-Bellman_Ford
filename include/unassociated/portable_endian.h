@@ -1,6 +1,10 @@
 // https://stackoverflow.com/questions/20813028/endian-h-not-found-on-mac-osx
 #ifdef __APPLE__
 
+/*
+* Fichier header, fourni par les professeurs (cours LEPL1503 à l'UCL), utilisé dans le projet.
+*/
+
 #include <machine/endian.h>
 #include <libkern/OSByteOrder.h>
 

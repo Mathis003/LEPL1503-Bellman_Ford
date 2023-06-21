@@ -2,7 +2,7 @@
 #define PORTABLE_SEMAPHORE_H
 
 /*
-* Fichier header, fourni par les professeurs, non utilisé dans le projet.
+* Fichier header, fourni par les professeurs (cours LEPL1503 à l'UCL), non utilisé dans le projet.
 * Nous avons seulement eu besoin de Mutex pour synchroniser les threads.
 */
 

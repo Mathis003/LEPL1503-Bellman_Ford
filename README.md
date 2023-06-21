@@ -1,24 +1,22 @@
 # Description
 
+Ce projet implémente, en langage C, `l'algorithme de plus court chemin de Bellman-Ford` dans un graphe orienté et pondéré pouvant contenir des poids négatifs.
+
+Ce projet implémente une `architecture multithreading` simple et efficace. Seule la boucle principale du programme est effectuée par les threads car elle constitue à elle seule plus de 95% du temps d'exécution (du moins pour des graphes de tailles conséquentes).
+
+Dans ce projet, l'algorithme de Bellman-Ford est appliqué |V| fois, |V| étant le nombre de noeud du graphe.
+L'objectif est de trouver, pour chaque noeud source, le chemin plus long parmi tous les chemins les plus courts possibles (pour chaque noeud d'arrivée).
+
+Pour arriver à cela, pour chaque noeud du graphe, l'algorithme calcule tous les coûts minimums pour accéder à chaque noeud d'arrivée. Ensuite, le noeud d'arrivée ayant le plus long coût sera choisi.
+On y stockera également en résultat le chemin pour y accéder (Voir Spécification/fichier binaire de sortie).
+
+# Introduction
+
 Ce projet a été développé en `deuxième année de bachelier en ingénieur civil` à `l'université catholique de Louvain`, dans le cadre du `cours LEPL1503`.
 
 L'objectif principal était d'apprendre les spécificités du `langage C` et de développer des compétences en `programmation concurrente` en utilisant des threads.
 
 Le second objectif était d'apprendre à travailler en équipe à l'aide d'outils collaboratifs comme Git.
-
-Le projet est pour le moment privé car il s'agit d'un projet universitaire en cours de développement. Il sera rendu public dès que possible après la date limite.
-
-# Introduction
-
-Ce projet implémente, en langage C, `l'algorithme de plus court chemin de Bellman ford` dans un graphe orienté et pondéré pouvant contenir des poids négatifs.
-
-Ce projet implémente une `architecture multithreading` simple et efficace. Seule la boucle principale du programme est effectuée par les threads car elle constitue à elle seule plus de 95% du temps d'exécution (du moins pour des graphes de tailles conséquentes).
-
-Dans ce projet, l'algorithme de Bellman ford est appliqué |V| fois, |V| étant le nombre de noeud du graphe.
-L'objectif est de trouver, pour chaque noeud source, le chemin plus long parmi tous les chemins les plus courts possibles (pour chaque noeud d'arrivée).
-
-Pour arriver à cela, pour chaque noeud du graphe, l'algorithme calcule tous les coûts minimums pour accéder à chaque noeud d'arrivée. Ensuite, le noeud d'arrivée ayant le plus long coût sera choisi.
-On y stockera également en résultat le chemin pour y accéder (Voir Spécification/fichier binaire de sortie).
 
 # Auteurs
 
@@ -37,8 +35,6 @@ Ce programme prend en entrée un fichier `binaire` qui contient la représentati
     * le `noeud de départ` du lien (entier non-signé encodé sur 32 bits)
     * le `noeud d'arrivée` du lien (entier non-signé encodé sur 32 bits)
     * le `coût` du lien (entier signé encodé sur 32 bits)
-
-Ce fichier a donc une taille de : [2 + (3 * nombre_de_liens)] * taille_entier_non_signé_32bits
 
 ## Fichier binaire de sortie
 
@@ -187,14 +183,14 @@ La commande `make clean` utilise le Makefile pour supprimer :
 Pour utiliser les commandes du MakeFile, il faut toujours se trouver à la racine du projet.
 Vous pouvez facilement vérifier en tapant la commande `ls` dans le terminal. Si `MakeFile` apparaît, vous êtes à la racine du projet. Sinon vous devez vous déplacer en tapant `cd NameFolder` pour `avancer` dans un dossier ou `cd ..` pour `reculer`.
 
-# Exécution de l'exécutable sp (pour run le projet)
+## Exécution de l'exécutable sp (pour run le projet)
 
 `./main [-h -v -f NameOutputFile -n NbreThreads] NameOfInputFile`
 
-## Argument obligatoire
+### Argument obligatoire
 `NameOfInputFile` : Chemin vers le fichier binaire d'entrée représentant le graphe à traiter.
 
-## Arguments optionnels
+### Arguments optionnels
 `-v` : Autorise les messages de debug (en plus des messages d'erreurs à l'exécution) et de résultats sur la sortie standart (= stdout).
 => false par défaut (= pas de messages autorisés).
 
@@ -206,7 +202,7 @@ Vous pouvez facilement vérifier en tapant la commande `ls` dans le terminal. Si
 
 `-h` : Ecrit toutes les commandes et options dans le terminal.
 
-## Exemples
+### Exemples
 
 * `./main my_graph.bin`
 * `./main -f my_output_graph.bin my_graph.bin`
