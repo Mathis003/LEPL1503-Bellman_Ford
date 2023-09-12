@@ -1,6 +1,8 @@
 # Description
 
-Ce projet implémente, en langage C, `l'algorithme de plus court chemin de Bellman-Ford` dans un graphe orienté et pondéré pouvant contenir des poids négatifs.
+Ce projet a été conçu dans le cadre du cours LEPL1503-Projet3 à l'Université catholique de Louvain (UCL), pendant la deuxième année du cursus d'ingénieur civil.
+
+Il implémente, en langage C, `l'algorithme de plus court chemin de Bellman-Ford` dans un graphe orienté et pondéré pouvant contenir des poids négatifs.
 
 Ce projet implémente une `architecture multithreading` simple et efficace. Seule la boucle principale du programme est effectuée par les threads car elle constitue à elle seule plus de 95% du temps d'exécution (du moins pour des graphes de tailles conséquentes).
 
