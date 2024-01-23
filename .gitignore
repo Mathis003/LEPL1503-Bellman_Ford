@@ -1,0 +1,5 @@
+# Ignore some files and directory
+__pycache__
+.DS_Store
+.idea/
+.vscode
